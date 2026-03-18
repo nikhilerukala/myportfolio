@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #fdfdfd;
+    --foreground: #05050A;
+  }
+
+  .dark {
+    --background: #05050A;
+    --foreground: #fdfdfd;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+  
+  .glass-premium {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] hover:shadow-[#00D4FF]/20 hover:border-[#00D4FF]/30 transition-all duration-300;
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Animated background orbs - slow drift */
+@keyframes bg-orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(3%, -2%) scale(1.02); }
+  66% { transform: translate(-2%, 2%) scale(0.98); }
+}
+@keyframes bg-orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-4%, 3%) scale(1.03); }
+}
+@keyframes bg-orb-3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(2%, 2%); }
+  66% { transform: translate(-3%, -1%); }
+}
+.animate-bg-orb-1 { animation: bg-orb-1 18s ease-in-out infinite; }
+.animate-bg-orb-2 { animation: bg-orb-2 22s ease-in-out infinite; }
+.animate-bg-orb-3 { animation: bg-orb-3 20s ease-in-out infinite; }
+
+/* Grid with vignette fade */
+.bg-grid-mask {
+  mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 15%, transparent 75%);
+}
+
+/* Premium V3 Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c3aed60; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00D4FF; 
+}
