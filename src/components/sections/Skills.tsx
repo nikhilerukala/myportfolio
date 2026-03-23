@@ -23,6 +23,8 @@ const getCategoryIcon = (category: string) => {
 
 const skillToDevicon: Record<string, string> = {
   HTML: "html5",
+  HTML5: "html5",
+  CSS3: "css3",
   JavaScript: "javascript",
   TypeScript: "typescript",
   "React.js": "react",
@@ -36,17 +38,27 @@ const skillToDevicon: Record<string, string> = {
   "Daisy UI": "sass",
   "Ant Design": "react",
   "Node.js": "nodejs",
+  Python: "python",
+  Flask: "flask",
+  FastAPI: "fastapi",
   "Express.js": "express",
   Laravel: "laravel",
   PostgreSQL: "postgresql",
   MongoDB: "mongodb",
   SQLite: "sqlite",
   MySQL: "mysql",
+  WordPress: "/skills/wordpress.svg",
   Git: "git",
   Redux: "redux",
   Pinia: "/skills/pinia.svg",
   "Inertia.js": "vuejs",
-  "REST APIs": "express",
+  "REST APIs": "/skills/rest-api.svg",
+  "Google Analytics": "/skills/google-analytics.svg",
+  "Google Ads": "/skills/google-ads.svg",
+  Cursor: "/skills/cursor.svg",
+  Windsurf: "/skills/windsurf.svg",
+  v0: "/skills/v0.svg",
+  Claude: "/skills/claude.svg",
 };
 
 function getSkillImage(skill: string) {
