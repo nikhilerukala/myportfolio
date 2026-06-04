@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, X } from "lucide-react";
+import { Check, Mail, MapPin, Phone, X } from "lucide-react";
+import { resumeData } from "@/data/resume";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -79,9 +80,30 @@ export default function Contact() {
     }
   };
 
+  const contactItems = [
+    {
+      label: "Email",
+      value: resumeData.personal.email,
+      href: `mailto:${resumeData.personal.email}`,
+      icon: Mail,
+    },
+    {
+      label: "Mobile",
+      value: resumeData.personal.phone,
+      href: `tel:${resumeData.personal.phone.replace(/\s+/g, "")}`,
+      icon: Phone,
+    },
+    {
+      label: "Location",
+      value: resumeData.personal.location,
+      href: undefined,
+      icon: MapPin,
+    },
+  ];
+
   return (
     <section id="contact" className="py-24 px-6 border-t border-white/5 border-b border-white/5">
-      <div className="max-w-2xl mx-auto flex flex-col items-center">
+      <div className="max-w-4xl mx-auto flex flex-col items-center">
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
@@ -90,6 +112,45 @@ export default function Contact() {
         >
           <h2 className="text-3xl font-bold tracking-tight mb-4 text-white">Get In Touch</h2>
           <p className="text-zinc-400">Ready to start your next project? Drop a message below.</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="mb-8 grid w-full grid-cols-1 gap-3 md:grid-cols-3"
+        >
+          {contactItems.map(({ label, value, href, icon: Icon }) => {
+            const content = (
+              <>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-cyan-500/20 bg-cyan-500/10 text-cyan-300">
+                  <Icon size={18} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-xs font-medium uppercase text-zinc-500">{label}</span>
+                  <span className="block break-words text-sm font-medium text-zinc-200">{value}</span>
+                </span>
+              </>
+            );
+
+            return href ? (
+              <a
+                key={label}
+                href={href}
+                className="flex min-h-20 items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/70 p-4 transition-colors hover:border-cyan-500/40 hover:bg-zinc-800/80"
+              >
+                {content}
+              </a>
+            ) : (
+              <div
+                key={label}
+                className="flex min-h-20 items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/70 p-4"
+              >
+                {content}
+              </div>
+            );
+          })}
         </motion.div>
 
         <motion.form 
