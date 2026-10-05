@@ -6,7 +6,7 @@ import { ContactForm } from './ContactForm';
 
 export function Contact() {
   const { person } = resume;
-  const strip = (href: string) => href.replace(/^https?:\/\/(www\.)?/, '');
+  const strip = (href: string) => href.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
   const channels = [
     { label: 'Email', value: person.email, href: `mailto:${person.email}`, icon: Mail, external: false },
