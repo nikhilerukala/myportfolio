@@ -1,31 +1,64 @@
-# Portfolio Client
+# Nikhil E — Portfolio
 
-This is the Next.js app for the portfolio site. It includes the contact form API route at `POST /api/contact`, which sends email with Nodemailer.
+Next.js 14 (App Router) · TypeScript · Tailwind CSS · deployed on Vercel.
+
+## Editing content
+
+Every word on the site comes from [`src/data/resume.ts`](src/data/resume.ts) — components never hardcode copy.
+
+- **Case-study screenshots / recordings:** drop files in `public/work/<slug>/` and add entries to that study's `media` array (`kind: 'image'` uses `next/image`; `kind: 'video'` renders a muted, user-controlled `<video>`).
+- **GitHub:** set `person.links.github.href`; GitHub links stay hidden while it is empty.
+- **Resume PDF:** replace `public/Nikhil_E_React_Developer_Resume.pdf` (keep the filename).
+
+## Structure
+
+```
+src/
+  app/
+    layout.tsx               fonts (Geist via next/font), metadata, theme, analytics, JSON-LD
+    page.tsx                 home: Hero → Impact → Work → Experience → Skills → Contact
+    work/[slug]/             static case-study pages + per-study OG image
+    resume/page.tsx          accessible HTML resume with "Download PDF"
+    api/contact/route.ts     contact form → Resend
+    opengraph-image.tsx      next/og share image
+    sitemap.ts, robots.ts, not-found.tsx
+  components/
+    layout/                  header, nav, footer, theme toggle, skip link
+    sections/                home-page sections (ContactForm is the only interactive one)
+    work/                    architecture diagram, case-study media
+    ui/                      Container, Section, MetricList, TagList, ResumeDownloadLink, RevealObserver
+    seo/PersonJsonLd.tsx
+  data/resume.ts             all content + TypeScript interfaces
+  lib/                       contact validation (shared client/server), OG layout
+```
+
+Client components are limited to: theme provider/toggle, nav (active route), resume download link (analytics event), reveal observer, and contact form.
 
 ## Local development
 
-1. Copy `.env.example` to `.env.local`.
-2. Fill in these variables:
-   - `CONTACT_EMAIL`
-   - `EMAIL_USER`
-   - `EMAIL_PASS`
-   - `EMAIL_FROM` (optional)
-   - `EMAIL_SERVICE` for provider shortcuts like Gmail, or `SMTP_HOST`/`SMTP_PORT`/`SMTP_SECURE` for an explicit SMTP server
-3. Start the app:
-
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+## Environment variables (Vercel → Settings → Environment Variables)
 
-## Vercel deploy
+| Name | Required | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | yes | Resend API key for the contact form |
+| `CONTACT_TO_EMAIL` | yes | Inbox that receives messages |
+| `CONTACT_FROM_EMAIL` | no | Sender on a Resend-verified domain (defaults to `onboarding@resend.dev`) |
+| `NEXT_PUBLIC_SITE_URL` | no | Canonical URL; defaults to `site.url` in `resume.ts` |
 
-1. Import the `client` folder into Vercel as the project root.
-2. Add the same mail environment variables in Vercel project settings for the Production environment.
-3. If you use Gmail, `EMAIL_PASS` must be a Google app password, not your normal Gmail password.
-4. If you use a custom SMTP provider, set `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, and `SMTP_PASS`.
-5. After adding or changing env vars in Vercel, redeploy so the serverless function picks them up.
-6. Check the Vercel function logs for `/api/contact` if the route still returns 500. The route now logs the underlying mailer error message.
+Enable **Analytics** in the Vercel project to receive the `resume_download` custom event (property `placement`: `navbar` / `hero` / `footer` / `resume-page`).
 
-The contact form will post to `/api/contact` automatically on Vercel.
+## Quality checks
+
+```bash
+npm run typecheck && npm run lint && npm run build
+```
+
+- Accessibility: axe-core (WCAG 2.1 A/AA + best-practice) reports 0 violations on every route in light and dark themes.
+- Colour: `#E8590C` is 3.3:1 on `#F7F6F2`, so in light mode it is used for fills (CTA, focus ring, active marker) and link text uses `--color-accent-ink` `#C2410C` (4.8:1). Dark mode uses `#FF7A33` for both (7.3:1).
+- Motion: scroll reveal is 250 ms, CSS-only after a single IntersectionObserver, disabled under `prefers-reduced-motion` and when JS is off.

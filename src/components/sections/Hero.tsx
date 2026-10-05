@@ -1,82 +1,113 @@
-"use client";
+import Link from 'next/link';
+import { ArrowRight, Download, Mail, MapPin } from 'lucide-react';
+import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import { hasGithub, resume } from '@/data/resume';
+import { Container } from '@/components/ui/Container';
+import { ResumeDownloadLink } from '@/components/ui/ResumeDownloadLink';
+import { HeroCode } from './HeroCode';
 
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, Download } from "lucide-react";
-import { resumeData } from "@/data/resume";
-import Link from "next/link";
+/** Splits the headline so the highlighted phrase can carry the gradient. */
+function Headline({ text, highlight }: { text: string; highlight: string }) {
+  const index = text.indexOf(highlight);
+  if (index === -1) return <>{text}</>;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="text-gradient animate-gradient-pan">{highlight}</span>
+      {text.slice(index + highlight.length)}
+    </>
+  );
+}
 
-export default function Hero() {
-  const socialLinks = [
-    { href: resumeData.personal.github, icon: Github, label: "GitHub" },
-    { href: resumeData.personal.linkedin, icon: Linkedin, label: "LinkedIn" },
-  ].filter((link) => link.href && link.href !== "#");
+export function Hero() {
+  const { person, hero } = resume;
+  const socials = [
+    { label: 'LinkedIn', href: person.links.linkedin.href, icon: FaLinkedinIn, external: true },
+    ...(hasGithub ? [{ label: 'GitHub', href: person.links.github.href, icon: FaGithub, external: true }] : []),
+    { label: `Email ${person.email}`, href: `mailto:${person.email}`, icon: Mail, external: false },
+  ];
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center pt-24 pb-12 px-6">
-      <div className="w-full max-w-7xl mx-auto flex flex-col items-start justify-center">
-        
-        <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.5 }}
-           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 mb-8"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-xs font-medium text-zinc-300">Available for new opportunities</span>
-        </motion.div>
+    <section aria-labelledby="hero-heading" className="relative overflow-hidden pb-16 pt-10 sm:pb-24 sm:pt-16 lg:pt-20">
+      <Container className="grid grid-cols-[minmax(0,1fr)] items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-12">
+        <div>
+          <p className="inline-flex animate-fade-up flex-wrap items-center gap-x-3 gap-y-1 rounded-full border border-border bg-surface/70 py-1.5 pl-2 pr-4 text-sm text-muted shadow-card backdrop-blur">
+            {person.available && (
+              <span className="relative ml-1 flex h-2.5 w-2.5" aria-hidden="true">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success" />
+              </span>
+            )}
+            <span className="font-medium text-fg">{person.availability}</span>
+            <span className="inline-flex items-center gap-1">
+              <MapPin aria-hidden="true" className="h-3.5 w-3.5" />
+              {person.location}
+            </span>
+          </p>
 
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl tracking-tight font-bold mb-6 text-white"
-        >
-          Building digital <br/>
-          <span className="text-zinc-600">experiences.</span>
-        </motion.h1>
+          <h1 id="hero-heading" className="mt-8">
+            <span className="block animate-fade-up text-lg font-medium text-muted [animation-delay:80ms] sm:text-xl">
+              {hero.greeting}
+            </span>
+            <span className="mt-4 block max-w-[16ch] animate-fade-up text-display font-semibold [animation-delay:160ms]">
+              <Headline text={person.headline} highlight={hero.highlight} />
+            </span>
+          </h1>
 
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-xl text-zinc-400 max-w-4xl mb-10 leading-relaxed"
-        >
-          Hi, I&apos;m <strong className="text-zinc-100 font-medium">{resumeData.personal.name}</strong>, a {resumeData.personal.title}. I specialize in crafting robust, high-performance web applications with clean architecture and beautiful interfaces.
-        </motion.p>
+          <p className="mt-8 max-w-prose animate-fade-up text-lg leading-relaxed text-muted [animation-delay:240ms]">
+            {person.intro}
+          </p>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-wrap items-center gap-4 md:gap-6"
-        >
-          <Link href="#projects" className="group flex items-center gap-2 px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-zinc-200 transition-colors">
-            View Projects <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
-          </Link>
-          <a
-            href={resumeData.personal.resumePdf}
-            download
-            className="group flex items-center gap-2 px-6 py-3 rounded-lg font-medium border border-white/20 text-white hover:bg-white/10 hover:border-cyan-500/50 transition-all duration-300"
-          >
-            <Download size={18} className="group-hover:scale-110 transition-transform" />
-            Download Resume
-          </a>
-          <div className="flex items-center gap-5 px-6">
-            {socialLinks.map(({ href, icon: Icon, label }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="text-zinc-400 hover:text-white transition-colors">
-                <Icon size={20} />
-              </a>
-            ))}
-            <a href={`mailto:${resumeData.personal.email}`} className="text-zinc-400 hover:text-white transition-colors">
-              <Mail size={20} />
-            </a>
+          <div className="mt-10 flex animate-fade-up flex-wrap items-center gap-3 [animation-delay:320ms]">
+            <ResumeDownloadLink placement="hero" className="btn-primary group h-12 px-6">
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 w-1/3 animate-shine bg-gradient-to-r from-transparent via-white/30 to-transparent"
+              />
+              <Download aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+              {hero.primaryCta}
+              <span className="sr-only">(PDF)</span>
+            </ResumeDownloadLink>
+            <Link href={hero.secondaryCta.href} className="btn-secondary group h-12 px-6">
+              {hero.secondaryCta.label}
+              <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+
+            <ul className="flex items-center gap-2 sm:ml-2" aria-label="Profiles">
+              {socials.map(({ label, href, icon: SocialIcon, external }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className="icon-btn"
+                    {...(external ? { target: '_blank', rel: 'me noopener noreferrer' } : {})}
+                  >
+                    <SocialIcon aria-hidden="true" className="h-4 w-4" />
+                    <span className="sr-only">
+                      {label}
+                      {external && ' (opens in a new tab)'}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
 
-      </div>
+          <dl className="mt-12 grid max-w-lg animate-fade-up grid-cols-3 gap-4 border-t border-border pt-8 [animation-delay:400ms]">
+            {hero.stats.map((stat) => (
+              <div key={stat.label} className="flex flex-col gap-1">
+                <dt className="text-xs leading-snug text-muted sm:text-sm">{stat.label}</dt>
+                <dd className="order-first font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
+                  {stat.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="animate-fade-up px-4 [animation-delay:300ms] sm:px-8 lg:px-0">
+          <HeroCode />
+        </div>
+      </Container>
     </section>
   );
 }
