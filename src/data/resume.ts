@@ -241,7 +241,7 @@ export const resume: Resume = {
     summary:
       'React.js Developer with 4+ years of experience building scalable, high-performing web applications across healthcare, BFSI, and enterprise domains. Proven expertise in React component architecture, performance optimisation, and cross-functional team collaboration. Experienced in Next.js (SSR/SSG), Node.js, TypeScript, and modern UI frameworks. Hands-on with AI integration in UI (chatbots, recommendation engines), prompt engineering for LLMs, and secure application development (CORS, JWT-based authentication, RBAC). Adept at code reviews, mentoring junior developers, and delivering production-grade solutions in Agile environments.',
     links: {
-      linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nikhilerukala' },
+      linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nikhil-e-b12194241/' },
       // TODO: add your GitHub profile URL — GitHub links stay hidden while this is empty.
       github: { label: 'GitHub', href: '' },
     },
