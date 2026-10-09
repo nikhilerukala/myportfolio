@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   applicationName: `${person.name} Portfolio`,
   authors: [{ name: person.name, url: siteUrl }],
   creator: person.name,
-  keywords: ['React.js Developer', 'Next.js', 'TypeScript', 'Frontend Developer', person.name, person.location],
+  keywords: ['Frontend Engineer', 'React.js Developer', 'Next.js', 'TypeScript', 'LLM integration', person.name, person.location],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',

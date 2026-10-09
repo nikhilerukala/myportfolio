@@ -21,8 +21,10 @@ export interface Person {
   givenName: string;
   familyName: string;
   title: string;
+  /** Full title line as written on the resume, shown on /resume. */
+  tagline: string;
   location: string;
-  /** e.g. "Open to roles · Willing to relocate anywhere" */
+  /** e.g. "Immediate joiner · Open to relocation" */
   availability: string;
   available: boolean;
   email: string;
@@ -214,10 +216,10 @@ export interface Resume {
 
 export const resume: Resume = {
   site: {
-    url: 'https://nikhilerukala.dev',
-    title: 'Nikhil E — React.js Developer',
+    url: 'https://nikhile.vercel.app',
+    title: 'Nikhil E — Frontend Engineer (React & Next.js)',
     description:
-      'React.js Developer with 4+ years building fast, accessible React and Next.js applications for healthcare, BFSI and enterprise teams.',
+      'Frontend Engineer with 4 years building fast, accessible React and Next.js applications, including LLM-powered features, for healthcare, education and enterprise teams.',
     locale: 'en_IN',
     resumePdf: {
       href: '/Nikhil_E_React_Developer_Resume.pdf',
@@ -229,17 +231,18 @@ export const resume: Resume = {
     name: 'Nikhil E',
     givenName: 'Nikhil',
     familyName: 'Erukala',
-    title: 'React.js Developer',
+    title: 'Frontend Engineer',
+    tagline: 'Frontend Engineer | React & Next.js Developer | LLM Feature Integration',
     location: 'Hyderabad, India',
-    availability: 'Available now · Open to relocate anywhere',
+    availability: 'Immediate joiner · Open to relocation',
     available: true,
-    email: 'nikhilerukala99@gmail.com',
+    email: 'nekkhel45@gmail.com',
     phone: '+91 93813 78437',
     headline: 'I build React products that feel instant — for thousands of real users.',
     intro:
-      '4+ years shipping React and Next.js products across healthcare, BFSI and enterprise — performance work, accessible component systems, and AI features that stream instead of spin.',
+      '4 years shipping React and Next.js products across healthcare, education and enterprise — performance work, accessible component systems, and LLM features that stream instead of spin.',
     summary:
-      'React.js Developer with 4+ years of experience building scalable, high-performing web applications across healthcare, BFSI, and enterprise domains. Proven expertise in React component architecture, performance optimisation, and cross-functional team collaboration. Experienced in Next.js (SSR/SSG), Node.js, TypeScript, and modern UI frameworks. Hands-on with AI integration in UI (chatbots, recommendation engines), prompt engineering for LLMs, and secure application development (CORS, JWT-based authentication, RBAC). Adept at code reviews, mentoring junior developers, and delivering production-grade solutions in Agile environments.',
+      'React.js Developer with 4 years of experience building scalable, high-performing web applications across healthcare, education, and enterprise domains. Proven expertise in React component architecture, performance optimisation, and cross-functional team collaboration. Experienced in Next.js (SSR/SSG), Node.js, TypeScript, and modern UI frameworks. Hands-on with AI integration in UI (chatbots, recommendation engines), prompt engineering for LLMs, and secure application development (CORS, JWT-based authentication, RBAC). Adept at code reviews, mentoring junior developers, and delivering production-grade solutions in Agile environments.',
     links: {
       linkedin: { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nikhil-e-b12194241/' },
       // TODO: add your GitHub profile URL — GitHub links stay hidden while this is empty.
@@ -255,12 +258,12 @@ export const resume: Resume = {
   ],
 
   hero: {
-    greeting: 'Hi, I’m Nikhil — React.js Developer',
+    greeting: 'Hi, I’m Nikhil — Frontend Engineer',
     highlight: 'feel instant',
     primaryCta: 'Download Resume',
     secondaryCta: { label: 'View Work', href: '/#work' },
     stats: [
-      { value: '4+', label: 'Years shipping React' },
+      { value: '4', label: 'Years shipping React' },
       { value: '40+', label: 'Reusable components built' },
       { value: '5,000+', label: 'Doctors on my UI' },
     ],
@@ -811,7 +814,7 @@ export const resume: Resume = {
       label: 'Backend & APIs',
       items: 'Node.js, Express.js, REST APIs, GraphQL (basic), OAuth, JWT, RBAC, Server-Sent Events (SSE)',
     },
-    { label: 'Databases & ORM', items: 'PostgreSQL, MySQL, MongoDB' },
+    { label: 'Databases & ORM', items: 'PostgreSQL, MySQL, MongoDB, Prisma ORM' },
     { label: 'Build & Tooling', items: 'Vite, Webpack, Git, GitHub, GitLab, Monorepo (Nx / Turborepo basics)' },
     {
       label: 'AI & LLM',
